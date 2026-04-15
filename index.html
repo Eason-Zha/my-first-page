@@ -1,98 +1,367 @@
 <!DOCTYPE html>
 <html lang="zh-CN">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>我的个人主页</title>
-  <style>
-    * {
-      margin: 0;
-      padding: 0;
-      box-sizing: border-box;
-    }
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eason-Zha | 个人主页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-    body {
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-      background: linear-gradient(135deg, #f5f7fa 0%, #e4eaf5 100%);
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
+        :root {
+            --primary: #6366f1;
+            --secondary: #8b5cf6;
+            --accent: #ec4899;
+            --dark: #1e293b;
+            --light: #f8fafc;
+            --gray: #94a3b8;
+        }
 
-    .card {
-      background: white;
-      max-width: 500px;
-      width: 100%;
-      border-radius: 20px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08);
-      padding: 40px 30px;
-      text-align: center;
-    }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: linear-gradient(135deg, #0f172a 0%, #1e293b 50%, #0f172a 100%);
+            min-height: 100vh;
+            color: var(--light);
+            overflow-x: hidden;
+        }
 
-    .avatar {
-      width: 100px;
-      height: 100px;
-      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-      border-radius: 50%;
-      margin: 0 auto 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      color: white;
-      font-size: 32px;
-    }
+        /* 动态背景粒子效果 */
+        .bg-particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            background: 
+                radial-gradient(circle at 20% 30%, rgba(99, 102, 241, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, rgba(139, 92, 246, 0.15) 0%, transparent 50%),
+                radial-gradient(circle at 40% 80%, rgba(236, 72, 153, 0.1) 0%, transparent 50%);
+            animation: bgShift 15s ease-in-out infinite alternate;
+        }
 
-    h1 {
-      font-size: 26px;
-      color: #222;
-      margin-bottom: 8px;
-    }
+        @keyframes bgShift {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(20px, -20px) scale(1.05); }
+        }
 
-    .bio {
-      color: #666;
-      margin-bottom: 30px;
-      line-height: 1.6;
-    }
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+            position: relative;
+            z-index: 1;
+        }
 
-    .links {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-    }
+        /* 头部卡片 */
+        .hero-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border-radius: 24px;
+            padding: 48px;
+            text-align: center;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            margin-bottom: 40px;
+            animation: fadeInUp 0.8s ease-out;
+        }
 
-    .link-btn {
-      display: block;
-      padding: 14px;
-      border-radius: 12px;
-      background: #f7f8fc;
-      color: #333;
-      text-decoration: none;
-      font-weight: 500;
-      transition: all 0.2s ease;
-    }
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
 
-    .link-btn:hover {
-      background: #667eea;
-      color: white;
-      transform: translateY(-2px);
-    }
-  </style>
+        .avatar {
+            width: 120px;
+            height: 120px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+            border-radius: 50%;
+            margin: 0 auto 24px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 48px;
+            font-weight: bold;
+            box-shadow: 0 8px 24px rgba(99, 102, 241, 0.3);
+            border: 4px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .hero-card h1 {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            background: linear-gradient(90deg, var(--primary), var(--secondary), var(--accent));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-card .title {
+            font-size: 18px;
+            color: var(--gray);
+            margin-bottom: 20px;
+        }
+
+        .hero-card .bio {
+            font-size: 16px;
+            line-height: 1.8;
+            color: #cbd5e1;
+            max-width: 700px;
+            margin: 0 auto 32px;
+        }
+
+        /* 社交链接 */
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 16px;
+            flex-wrap: wrap;
+            margin-bottom: 32px;
+        }
+
+        .social-link {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            padding: 12px 24px;
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 12px;
+            color: var(--light);
+            text-decoration: none;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .social-link:hover {
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            transform: translateY(-3px);
+            box-shadow: 0 8px 16px rgba(99, 102, 241, 0.3);
+        }
+
+        /* 技能标签 */
+        .skills-section {
+            margin-bottom: 60px;
+            animation: fadeInUp 0.8s ease-out 0.2s both;
+        }
+
+        .section-title {
+            font-size: 28px;
+            font-weight: 700;
+            text-align: center;
+            margin-bottom: 32px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -8px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--primary), var(--accent));
+            border-radius: 2px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+            gap: 16px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .skill-tag {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 12px;
+            padding: 16px;
+            text-align: center;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .skill-tag:hover {
+            transform: translateY(-5px);
+            border-color: var(--primary);
+            box-shadow: 0 8px 16px rgba(99, 102, 241, 0.2);
+        }
+
+        /* 项目展示 */
+        .projects-section {
+            animation: fadeInUp 0.8s ease-out 0.4s both;
+        }
+
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .project-card {
+            background: rgba(30, 41, 59, 0.7);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 16px;
+            padding: 28px;
+            transition: all 0.3s ease;
+        }
+
+        .project-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
+            border-color: var(--secondary);
+        }
+
+        .project-card h3 {
+            font-size: 20px;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: var(--light);
+        }
+
+        .project-card p {
+            color: #cbd5e1;
+            line-height: 1.7;
+            margin-bottom: 16px;
+        }
+
+        .project-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+
+        .project-tag {
+            font-size: 12px;
+            padding: 4px 12px;
+            background: rgba(99, 102, 241, 0.2);
+            border-radius: 20px;
+            color: #a5b4fc;
+        }
+
+        .project-link {
+            color: var(--primary);
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .project-link:hover {
+            color: var(--accent);
+        }
+
+        /* 页脚 */
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: var(--gray);
+            font-size: 14px;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            margin-top: 60px;
+        }
+
+        /* 响应式适配 */
+        @media (max-width: 768px) {
+            .hero-card {
+                padding: 32px 20px;
+            }
+            .hero-card h1 {
+                font-size: 28px;
+            }
+            .projects-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
 </head>
-
 <body>
-  <div class="card">
-    <div class="avatar">我</div>
-    <h1>Eason</h1>
-    <p class="bio">热爱技术、喜欢设计、喜欢篮球。</p>
+    <div class="bg-particles"></div>
+    <div class="container">
+        <!-- 头部个人信息 -->
+        <div class="hero-card">
+            <div class="avatar">E</div>
+            <h1>Eason Zhang</h1>
+            <p class="title">资深纳米压印工程经理 | 先进制造技术专家</p>
+            <p class="bio">
+                专注于纳米压印（NIL）、激光直写（LDW）、黄光工艺等先进微纳制造技术，
+                拥有丰富的工艺开发、团队管理与项目落地经验，致力于推动光学显示、AR SRG等领域的技术创新。
+            </p>
+            <div class="social-links">
+                <a href="https://eason-zha.github.io/my-first-page" class="social-link">个人主页/</a>
+                <a href="zhangyilin789#163.com" class="social-link">E-mail</a>
+                <a href="https://www.linkedin.com/in/溢麟-张-83a399193" class="social-link">LinkedIn</a>
+                <a href="#" class="social-link">无个人博客</a>
+            </div>
+        </div>
 
-    <div class="links">
-      <a href="#" class="link-btn">李安凤大傻子</a>
-      <a href="#" class="link-btn">15951715682</a>
-      <a href="#" class="link-btn">zhangyilin789@163.com</a>
-      <a href="#" class="link-btn">我没有博客</a>
+        <!-- 技能专长 -->
+        <div class="skills-section">
+            <h2 class="section-title">技能专长</h2>
+            <div class="skills-grid">
+                <div class="skill-tag">纳米压印 NIL</div>
+                <div class="skill-tag">激光直写 LDW</div>
+                <div class="skill-tag">黄光工艺</div>
+                <div class="skill-tag">AR SRG</div>
+                <div class="skill-tag">光学设计</div>
+                <div class="skill-tag">PVG光波导</div>
+                <div class="skill-tag">SPC统计过程控制</div>
+                <div class="skill-tag">Python开发</div>
+                <div class="skill-tag">Excel VBA</div>
+                <div class="skill-tag">工艺优化</div>
+                <div class="skill-tag">团队管理</div>
+                <div class="skill-tag">项目管理</div>
+            </div>
+        </div>
+
+        <!-- 项目展示 -->
+        <div class="projects-section">
+            <h2 class="section-title">项目经验</h2>
+            <div class="projects-grid">
+                <div class="project-card">
+                    <h3>SPC统计过程控制系统</h3>
+                    <p>基于Python开发的全流程SPC系统，实现生产数据实时监控、异常预警与质量分析，提升工艺稳定性与良率。</p>
+                    <div class="project-tags">
+                        <span class="project-tag">Python</span>
+                        <span class="project-tag">数据分析</span>
+                        <span class="project-tag">质量管控</span>
+                    </div>
+                    <a href="#" class="project-link">查看详情 →</a>
+                </div>
+                <div class="project-card">
+                    <h3>纳米压印工艺优化项目</h3>
+                    <p>主导纳米压印工艺参数优化，解决脱模缺陷、图案保真度等关键问题，实现量产良率提升至95%。</p>
+                    <div class="project-tags">
+                        <span class="project-tag">NIL</span>
+                        <span class="project-tag">工艺开发</span>
+                        <span class="project-tag">良率提升</span>
+                    </div>
+                    <a href="#" class="project-link">查看详情 →</a>
+                </div>
+                <div class="project-card">
+                    <h3>LDW图形生成工具</h3>
+                    <p>开发激光直写设备专用图形生成与优化工具，支持复杂微纳结构设计，提升加工效率与精度。</p>
+                    <div class="project-tags">
+                        <span class="project-tag">LDW</span>
+                        <span class="project-tag">图形算法</span>
+                        <span class="project-tag">自动化</span>
+                    </div>
+                    <a href="#" class="project-link">查看详情 →</a>
+                </div>
+            </div>
+        </div>
     </div>
-  </div>
+
+    <footer>
+        <p>© 2025 Eason Zha. All rights reserved.</p>
+    </footer>
 </body>
 </html>
